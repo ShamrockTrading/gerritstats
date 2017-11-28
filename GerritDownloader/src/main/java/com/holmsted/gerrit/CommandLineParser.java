@@ -14,6 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
@@ -98,12 +99,12 @@ public class CommandLineParser {
         @Override
         public String convert(String value) {
             try {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 dateFormat.setLenient(false);
                 dateFormat.parse(value);
                 return value;
             } catch (ParseException e) {
-                throw new ParameterException("Bad Date format " + value);
+                throw new ParameterException("Bad Date format " + value, e);
             }
         }
     }

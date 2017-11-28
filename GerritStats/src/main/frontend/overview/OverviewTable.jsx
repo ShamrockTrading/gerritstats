@@ -112,6 +112,19 @@ export default class OverviewTable extends React.Component {
                     </Td>
                 ),
             },
+            'totalReviewCount': {
+                sortFunction: Reactable.Sort.NumericInteger,
+                highlighter: new TableCellHighlighter(overviewUserdata, selectedUsers, 'totalReviewCount'),
+                description: 'A total number of reviews completed.',
+                header: (<span>Review Activity</span>),
+                cell: (record, index) => (
+                    <Td key={'totalReviewCount' + index}
+                        column='totalReviewCount' style={this.computeCellStyle(index, 'totalReviewCount')}>
+                        {record.reviewCountPlus1 + record.reviewCountPlus2 +
+                         record.reviewCountMinus1 + record.reviewCountMinus2}
+                    </Td>
+                ),
+            },
             'allCommentsWritten': {
                 sortFunction: Reactable.Sort.NumericInteger,
                 highlighter: new TableCellHighlighter(overviewUserdata, selectedUsers, 'allCommentsWritten'),
@@ -221,6 +234,21 @@ export default class OverviewTable extends React.Component {
                     </Td>
                 ),
             },
+            'calculatedActivity': {
+                sortFunction: Reactable.Sort.NumericInteger,
+                highlighter: new TableCellHighlighter(overviewUserdata, selectedUsers, 'calculatedActivity'),
+                description: 'Total activity in Gerrit',
+                header: (<span>Calculated Activity</span>),
+                cell: (record, index) => (
+                    <Td key={'calculatedActivity' + index}
+                        column='calculatedActivity' 
+                        style={this.computeCellStyle(index, 'calculatedActivity')}>
+                        {((record.reviewCountPlus1 + record.reviewCountPlus2 +
+                         record.reviewCountMinus1 + record.reviewCountMinus2) / 2)
+                         + record.commitCount}
+                    </Td>
+                ),
+            },
         };
     }
 
@@ -276,6 +304,7 @@ export default class OverviewTable extends React.Component {
 
     computeCellStyle(index, columnName) {
         const metadata = this.state.columnMetadata[columnName];
+        console.log(metadata)
         var style = {};
         if (metadata.highlighter) {
             const backgroundColor = metadata.highlighter.getHighlightColor(index);
