@@ -112,6 +112,18 @@ export default class OverviewTable extends React.Component {
                     </Td>
                 ),
             },
+            'reviewCount': {
+                sortFunction: Reactable.Sort.NumericInteger,
+                highlighter: new TableCellHighlighter(overviewUserdata, selectedUsers, 'reviewCount'),
+                description: 'A total number of reviews completed.',
+                header: (<span>Review Count</span>),
+                cell: (record, index) => (
+                    <Td key={'reviewCount' + index}
+                        column='reviewCount' style={this.computeCellStyle(index, 'reviewCount')}>
+                        {record.reviewCount}
+                    </Td>
+                ),
+            },
             'allCommentsWritten': {
                 sortFunction: Reactable.Sort.NumericInteger,
                 highlighter: new TableCellHighlighter(overviewUserdata, selectedUsers, 'allCommentsWritten'),
@@ -218,6 +230,19 @@ export default class OverviewTable extends React.Component {
                         column='averageTimeInCodeReview' value={record.averageTimeInCodeReview}
                         style={this.computeCellStyle(index, 'averageTimeInCodeReview')}>
                         {formatPrintableDuration(record.averageTimeInCodeReview)}
+                    </Td>
+                ),
+            },
+            'calculatedActivity': {
+                sortFunction: decimalComparator,
+                highlighter: new TableCellHighlighter(overviewUserdata, selectedUsers, 'calculatedActivity'),
+                description: 'Total activity in Gerrit',
+                header: (<span>Calculated Activity</span>),
+                cell: (record, index) => (
+                    <Td key={'calculatedActivity' + index}
+                        column='calculatedActivity'
+                        style={this.computeCellStyle(index, 'calculatedActivity')}>
+                        {record.calculatedActivity}
                     </Td>
                 ),
             },

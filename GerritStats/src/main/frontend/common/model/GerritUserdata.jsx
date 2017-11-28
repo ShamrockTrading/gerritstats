@@ -306,6 +306,10 @@ export default class GerritUserdata {
         return this.record.commits.length;
     }
 
+    getProductivityScore() {
+        return this.record.commits.length;
+    }
+
     getAbandonedCommitCount() {
         return this.record.abandonedCommitCount;
     }

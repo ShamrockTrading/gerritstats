@@ -28,6 +28,9 @@ public class IdentityRecord {
     int reviewCountPlus1;
     int reviewCountMinus1;
     int reviewCountMinus2;
+    int reviewCount;
+
+    long calculatedActivity;
 
     // updated when commit or comments written by this user are added
     long firstActiveDate = Long.MAX_VALUE;
@@ -171,6 +174,16 @@ public class IdentityRecord {
 
     public int getReviewCountPlus2() {
         return reviewCountPlus2;
+    }
+
+    public int getReviewCount() {
+        reviewCount = reviewCountPlus2 + reviewCountPlus1 + reviewCountMinus1 + reviewCountMinus2;
+        return reviewCount;
+    }
+
+    public long getCalculatedActivity() {
+        calculatedActivity = getReviewCount() / 2 + getCommits().size();
+        return calculatedActivity;
     }
 
     public List<GerritProject> getGerritProjects() {
